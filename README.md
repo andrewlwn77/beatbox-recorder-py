@@ -1,7 +1,7 @@
 # Beatbox Recorder
 
 <p align="center">
-  <img src="docs/assets/beatbox.png" alt="Beatbox Logo" width="400"/>
+  <img src="https://raw.githubusercontent.com/andrewlwn77/beatbox-recorder/main/docs/assets/beatbox.png" alt="Beatbox Logo" width="400"/>
 </p>
 
 ## Overview
