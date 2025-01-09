@@ -3,6 +3,7 @@ import json
 import hashlib
 import asyncio
 import os
+import inspect
 from typing import Any, Callable, Dict, TypeVar, Set
 from datetime import datetime
 from functools import wraps
@@ -55,7 +56,7 @@ class Beatbox:
         with open(self.storage_file, 'w') as f:
             json.dump(self.storage, f, indent=2)
             
-    def _make_key(self, args: tuple, kwargs: dict) -> str:
+    def _make_key(self, func: Callable, args: tuple, kwargs: dict) -> str:
         """Create a unique key for the function call."""
         def make_hashable(obj):
             if isinstance(obj, (str, int, float, bool, type(None))):
@@ -67,8 +68,14 @@ class Beatbox:
             if isinstance(obj, set):
                 return tuple(sorted(make_hashable(x) for x in obj))
             return str(obj)
+
+        # For regular functions and methods, use the function name
+        # For lambdas and other callables, just use the arguments
+        if hasattr(func, '__name__') and not func.__name__ == '<lambda>':
+            call_repr = (func.__name__, make_hashable((args, kwargs)))
+        else:
+            call_repr = make_hashable((args, kwargs))
             
-        call_repr = make_hashable((args, kwargs))
         return hashlib.md5(str(call_repr).encode()).hexdigest()
 
     def _serialize(self, obj: Any, memo: Set = None) -> Any:
@@ -178,7 +185,7 @@ class Beatbox:
         if asyncio.iscoroutinefunction(func):
             @wraps(func)
             async def async_wrapper(*args, **kwargs):
-                key = self._make_key(args, kwargs)
+                key = self._make_key(func, args, kwargs)
                 
                 if not isinstance(self.mode, Mode):
                     raise BeatboxError(f"Invalid mode: {self.mode}")
@@ -205,7 +212,7 @@ class Beatbox:
         else:
             @wraps(func)
             def sync_wrapper(*args, **kwargs):
-                key = self._make_key(args, kwargs)
+                key = self._make_key(func, args, kwargs)
                 
                 if not isinstance(self.mode, Mode):
                     raise BeatboxError(f"Invalid mode: {self.mode}")
