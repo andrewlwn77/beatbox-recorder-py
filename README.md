@@ -33,10 +33,25 @@ Using poetry:
 poetry add beatbox-recorder
 ```
 
+## Import Options
+
+Starting from version 1.1.0, you can import the package in two ways:
+
+```python
+# Option 1: Original import style
+from beatbox import Beatbox, Mode
+
+# Option 2: Import matching the package name
+from beatbox_recorder import Beatbox, Mode
+```
+
+Both import styles provide the same functionality. The second option follows Python conventions where the import name matches the package name (with hyphens converted to underscores).
+
 ## Quick Start
 
 ```python
 from beatbox import Beatbox, Mode
+# OR from beatbox_recorder import Beatbox, Mode
 
 # Create a Beatbox instance
 bb = Beatbox("my_storage.json")

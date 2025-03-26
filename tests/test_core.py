@@ -2,7 +2,7 @@ import pytest
 import asyncio
 import os
 from datetime import datetime
-from beatbox import Beatbox, Mode, NoRecordingError, BeatboxError
+from beatbox_recorder import Beatbox, Mode, NoRecordingError, BeatboxError
 
 TEST_STORAGE_FILE = "test_storage.json"
 
