@@ -6,7 +6,7 @@
 
 ## Overview
 
-Beatbox is a lightweight Python library that records and replays function calls, making it perfect for testing, mocking, and debugging. It can capture the results of expensive operations, API calls, or complex computations and play them back instantly, significantly speeding up tests and development cycles.
+Beatbox Recorder is a lightweight Python library that records and replays function calls, making it perfect for testing, mocking, and debugging. It can capture the results of expensive operations, API calls, or complex computations and play them back instantly, significantly speeding up tests and development cycles.
 
 ## Requirements
 
@@ -33,10 +33,18 @@ Using poetry:
 poetry add beatbox-recorder
 ```
 
+## Import Options
+
+The package can be imported as follows:
+
+```python
+from beatbox_recorder import Beatbox, Mode
+```
+
 ## Quick Start
 
 ```python
-from beatbox import Beatbox, Mode
+from beatbox_recorder import Beatbox, Mode
 
 # Create a Beatbox instance
 bb = Beatbox("my_storage.json")
@@ -67,7 +75,7 @@ user_data = await wrapped_fetch(123)  # Makes actual API call
 
 ```python
 import pytest
-from beatbox import Beatbox, Mode
+from beatbox_recorder import Beatbox, Mode
 
 @pytest.fixture
 def recorder():
@@ -114,7 +122,7 @@ Beatbox can handle serialization of:
 ## Error Handling
 
 ```python
-from beatbox import NoRecordingError, SerializationError
+from beatbox_recorder import NoRecordingError, SerializationError
 
 try:
     bb.set_mode(Mode.PLAYBACK)
